@@ -1,26 +1,535 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* =========================
+   Theme Tokens (Tailwind v4)
+   ========================= */
 @theme inline {
+  /* map Tailwind color tokens to your CSS vars */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* charts */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* sidebar */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* radii */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* fonts */
+  --font-sans: var(--font-geist-sans, ui-sans-serif);
+  --font-mono: var(--font-geist-mono, ui-monospace);
+  --font-ibm-plex-sans: 'IBM Plex Sans', sans-serif;
+  --font-bebas-neue: var(--bebas-neue, 'Bebas Neue', sans-serif);
+
+  /* brand and extended palette */
+  --color-primary-admin: #25388c;
+
+  --color-green: #027a48;
+  --color-green-100: #ecfdf3;
+  --color-green-400: #4c7b62;
+  --color-green-500: #2cc171;
+  --color-green-800: #027a48;
+
+  --color-red: #ef3a4b;
+  --color-red-400: #f46f70;
+  --color-red-500: #e27233;
+  --color-red-800: #ef3a4b;
+
+  --color-blue-100: #0089f1;
+
+  --color-light-100: #d6e0ff;
+  --color-light-200: #eed1ac;
+  --color-light-300: #f8f8ff;
+  --color-light-400: #edf1f1;
+  --color-light-500: #8d8d8d;
+  --color-light-600: #f9fafb;
+  --color-light-700: #e2e8f0;
+  --color-light-800: #f8fafc;
+
+  --color-dark-100: #16191e;
+  --color-dark-200: #3a354e;
+  --color-dark-300: #232839;
+  --color-dark-400: #1e293b;
+  --color-dark-500: #0f172a;
+  --color-dark-600: #333c5c;
+  --color-dark-700: #464f6f;
+  --color-dark-800: #1e2230;
+
+  --color-gray-100: #cbd5e1;
+
+  /* responsive token */
+  --breakpoint-xs: 30rem; /* 480px */
+
+  /* assets */
+  --bg-image-pattern: url('/images/pattern.webp');
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* =========================
+   Light / Dark CSS variables
+   ========================= */
+:root {
+  --radius: 0.625rem;
+
+  /* Light (full HSL values so your mapping works) */
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(222.2 84% 4.9%);
+
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(222.2 84% 4.9%);
+
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(222.2 84% 4.9%);
+
+  --primary: #eed1ac; /* warm sand */
+  --primary-foreground: #16191e;
+
+  --secondary: hsl(210 40% 96.1%);
+  --secondary-foreground: hsl(222.2 47.4% 11.2%);
+
+  --muted: hsl(210 40% 96.1%);
+  --muted-foreground: hsl(215.4 16.3% 46.9%);
+
+  --accent: hsl(210 40% 96.1%);
+  --accent-foreground: hsl(222.2 47.4% 11.2%);
+
+  --destructive: hsl(0 84.2% 60.2%);
+  --destructive-foreground: hsl(210 40% 98%);
+
+  --border: hsl(214.3 31.8% 91.4%);
+  --input: hsl(214.3 31.8% 91.4%);
+  --ring: hsl(222.2 84% 4.9%);
+
+  /* charts */
+  --chart-1: hsl(12 76% 61%);
+  --chart-2: hsl(173 58% 39%);
+  --chart-3: hsl(197 37% 24%);
+  --chart-4: hsl(43 74% 66%);
+  --chart-5: hsl(27 87% 67%);
+}
+
+.dark {
+  --background: hsl(222.2 84% 4.9%);
+  --foreground: hsl(210 40% 98%);
+
+  --card: hsl(222.2 84% 4.9%);
+  --card-foreground: hsl(210 40% 98%);
+
+  --popover: hsl(222.2 84% 4.9%);
+  --popover-foreground: hsl(210 40% 98%);
+
+  --primary: #eed1ac;
+  --primary-foreground: #16191e;
+
+  --secondary: hsl(217.2 32.6% 17.5%);
+  --secondary-foreground: hsl(210 40% 98%);
+
+  --muted: hsl(217.2 32.6% 17.5%);
+  --muted-foreground: hsl(215 20.2% 65.1%);
+
+  --accent: hsl(217.2 32.6% 17.5%);
+  --accent-foreground: hsl(210 40% 98%);
+
+  --destructive: hsl(0 62.8% 30.6%);
+  --destructive-foreground: hsl(210 40% 98%);
+
+  --border: hsl(217.2 32.6% 17.5%);
+  --input: hsl(217.2 32.6% 17.5%);
+  --ring: hsl(212.7 26.8% 83.9%);
+
+  /* charts */
+  --chart-1: hsl(220 70% 50%);
+  --chart-2: hsl(160 60% 45%);
+  --chart-3: hsl(30 80% 55%);
+  --chart-4: hsl(280 65% 60%);
+  --chart-5: hsl(340 75% 55%);
+}
+
+/* =========
+   Base layer
+   ========= */
+@layer base {
+  *,
+  ::before,
+  ::after {
+    @apply border-border;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-ibm-plex-sans);
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2;
+  }
+
+  /* Hide scrollbar utility */
+  .hide-scrollbar::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    border-radius: 0;
+  }
+  .hide-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .hide-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 0;
+  }
+  .hide-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: transparent;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* =================
+   Components layer
+   ================= */
+@layer components {
+  /* Root page container (used in app/(root)/layout.tsx) */
+  .root-container {
+    @apply flex min-h-screen flex-1 flex-col bg-background px-5 bg-top bg-cover;
+    background-image: var(--bg-image-pattern);
+    /* ensure pattern isn't darkening base */
+    background-blend-mode: normal;
+  }
+
+  /* Common form styles */
+  .form-btn {
+    @apply inline-flex w-full items-center justify-center rounded-md px-6 py-2 font-bold text-base bg-primary text-dark-100;
+    min-height: 3.5rem; /* 56px */
+  }
+  .form-input {
+    @apply w-full border-none text-base font-bold text-white placeholder:font-normal placeholder:text-light-100 bg-dark-300;
+    min-height: 3.5rem;
+  }
+  .form-input:focus-visible {
+    @apply ring-0 shadow-none;
+  }
+
+  /* Book / library UI (keep if your pages use these) */
+  .book-title {
+    @apply mt-2 line-clamp-1 text-base font-semibold text-white;
+  }
+  .book-genre {
+    @apply mt-1 line-clamp-1 text-sm italic text-light-100;
+  }
+  .book-loaned {
+    @apply flex flex-row items-center gap-1;
+  }
+
+  .book-btn {
+    @apply mt-3 w-full font-bebas-neue text-base text-primary bg-dark-600;
+    min-height: 3.5rem;
+  }
+
+  .borrowed-book {
+    @apply p-5 rounded-2xl w-full relative;
+    background: linear-gradient(180deg, #12141d 0%, #12151f 100%);
+  }
+  .borrowed-book_cover {
+    @apply py-4 px-10 flex justify-center items-center w-full rounded-lg;
+  }
+
+  .book-cover_extra_small {
+    width: 28.95px;
+    height: 40px;
+  }
+  .book-cover_small {
+    width: 55px;
+    height: 76px;
+  }
+  .book-cover_medium {
+    width: 144px;
+    height: 199px;
+  }
+  .book-cover_regular {
+    width: 114px;
+    height: 169px;
+  }
+  .book-cover_wide {
+    width: 256px;
+    height: 354px;
+  }
+
+  .book-list {
+    @apply mt-10 flex flex-wrap gap-5;
+  }
+
+  .book-overview {
+    @apply flex flex-col-reverse items-center gap-12;
+  }
+  .book-overview h1 {
+    @apply text-5xl font-semibold text-white;
+  }
+
+  .book-info {
+    @apply mt-7 flex flex-row flex-wrap gap-4 text-xl text-light-100;
+  }
+  .book-copies {
+    @apply flex flex-row flex-wrap gap-4 mt-1;
+  }
+  .book-copies p {
+    @apply text-xl text-light-100;
+  }
+  .book-copies p span {
+    @apply ml-2 font-semibold text-primary;
+  }
+
+  .book-description {
+    @apply mt-2 text-justify text-xl text-light-100;
+  }
+
+  .book-overview_btn {
+    @apply mt-4 bg-primary text-dark-100;
+  }
+  .book-overview_btn:hover {
+    @apply bg-primary/90;
+  }
+
+  .upload-btn {
+    @apply flex w-full items-center justify-center gap-1.5 rounded-md;
+    min-height: 3.5rem;
+  }
+  .upload-filename {
+    @apply mt-1 text-center text-xs;
+  }
+  .progress {
+    @apply rounded-full bg-green-800 p-0.5 text-center font-bebas-neue text-[8px] font-bold leading-none text-light-100;
+  }
+
+  .search {
+    @apply relative mt-10 flex w-full items-center rounded-xl bg-dark-300 px-4;
+    min-height: 3.5rem;
+  }
+  .search-input {
+    @apply w-full border-none font-bold text-white placeholder:font-normal placeholder:text-light-100;
+  }
+  .search-input:focus-visible {
+    @apply ring-0 shadow-none;
+  }
+
+  .book-receipt_admin-btn {
+    @apply rounded-md bg-light-300 text-primary-admin font-semibold;
+  }
+  .book-receipt_admin-btn:hover {
+    @apply bg-light-300/80;
+  }
+
+  #book-ticket {
+    @apply relative mt-10 hidden w-[544px] overflow-hidden bg-dark-300 py-8;
+  }
+  #book-ticket #book-details div {
+    @apply space-y-1 rounded-md border border-light-100/10 p-3;
+  }
+  #book-ticket #book-details div p:first-child {
+    @apply text-xs text-light-700;
+  }
+  #book-ticket #book-details div p:last-child {
+    @apply text-sm font-bold text-white;
+  }
+  #book-ticket #book-divider div:first-child {
+    @apply absolute -left-3.5 top-1/2 w-7 h-7 -translate-y-1/2 rounded-full bg-black;
+  }
+  #book-ticket #book-divider div:last-child {
+    @apply absolute -right-3.5 top-1/2 w-7 h-7 -translate-y-1/2 rounded-full bg-black;
+  }
+  .book-ticket-circles {
+    @apply absolute inset-x-0 -bottom-6 flex flex-row gap-1.5;
+  }
+
+  #not-found {
+    @apply flex justify-center items-center flex-col text-center w-full;
+  }
+  #not-found h4 {
+    @apply text-white mt-6 font-semibold text-2xl;
+  }
+  #not-found p {
+    @apply text-light-100 w-[360px] mt-1;
+  }
+  .not-found-btn {
+    @apply bg-primary font-bebas-neue text-dark-100 text-xl min-h-12;
+    min-width: 360px;
+    margin-top: 1.5rem;
+  }
+  .not-found-btn:hover {
+    @apply bg-primary/90;
+  }
+
+  #pagination {
+    @apply flex flex-row justify-end gap-3;
+  }
+  .pagination-btn_light {
+    @apply bg-light-300 text-dark-300;
+  }
+  .pagination-btn_light:hover {
+    @apply bg-light-300/70;
+  }
+  .pagination-btn_dark {
+    @apply bg-dark-300;
+  }
+  .pagination-btn_dark:hover {
+    @apply bg-dark-100;
+  }
+  #pagination p {
+    @apply text-sm inline-flex items-center font-semibold px-4 py-1.5 rounded-md text-center;
+  }
+
+  .select-trigger {
+    @apply w-40 h-10 px-4 bg-dark-300 text-light-100 border-dark-100;
+  }
+  .select-content {
+    @apply bg-dark-300 text-light-100 border-dark-100;
+  }
+  .select-item:focus {
+    @apply bg-dark-600 text-light-100;
+  }
+
+  .library {
+    @apply mx-auto flex max-w-xl w-full flex-col text-center;
+  }
+  .library-subtitle {
+    @apply text-lg font-semibold uppercase text-light-100;
+  }
+  .library-title {
+    @apply mt-2 text-3xl font-semibold text-white;
+  }
+}
+
+/* =================
+   Responsive tweaks
+   ================= */
+@media (min-width: 30rem) {
+  .book-title {
+    @apply text-xl;
+  }
+  .book-genre {
+    @apply text-base;
+  }
+  .book-cover_regular {
+    width: 174px;
+    height: 239px;
+  }
+  .book-cover_wide {
+    width: 296px;
+    height: 404px;
+  }
+  .book-list {
+    @apply gap-10;
+  }
+  .root-container {
+    @apply px-10;
+  }
+  .library-title {
+    @apply text-5xl;
+  }
+}
+@media (max-width: 29.999rem) {
+  .book-loaned {
+    @apply justify-center;
+  }
+  .book-list {
+    @apply justify-between;
+  }
+}
+@media (min-width: 40rem) {
+  .book-overview {
+    @apply gap-32;
+  }
+}
+@media (min-width: 48rem) {
+  .book-overview h1 {
+    @apply text-7xl;
+  }
+  .root-container {
+    @apply px-16;
+  }
+}
+@media (max-width: 47.999rem) {
+  .book-overview_btn {
+    @apply w-full;
+  }
+}
+@media (min-width: 64rem) {
+  .book-overview {
+    @apply flex-row;
+  }
+}
+@media (min-width: 80rem) {
+  .book-overview {
+    @apply gap-8;
+  }
+}
+
+/* =========
+   Utilities
+   ========= */
+/* === SURFACE: Auth layout matches home (pattern + gradient + full height) === */
+
+@layer components {
+  /* Full-page surface (pattern + gradient), just like home */
+  .auth-container {
+    @apply min-h-screen flex flex-col-reverse sm:flex-row text-light-100;
+    /* two backgrounds: pattern first, then gradient */
+    background-image:
+      var(--bg-image-pattern), linear-gradient(180deg, #12141d 0%, #12151f 100%);
+    background-repeat: no-repeat, no-repeat;
+    background-size: cover, cover;
+    background-position: top, top;
+    background-blend-mode: normal;
+  }
+
+  /* Center the form column; keep the container’s background visible */
+  .auth-form {
+    @apply my-auto flex min-h-screen flex-1 items-center px-5 py-10;
+    background: transparent;
+  }
+
+  /* Card styling inside the form column */
+  .auth-box {
+    @apply mx-auto flex max-w-xl flex-col gap-6 rounded-lg p-10;
+    /* subtle internal gradient you had elsewhere */
+    background: linear-gradient(180deg, #12141d 0%, #12151f 100%);
+  }
+
+  /* Right-side illustration column */
+  .auth-illustration {
+    @apply sticky h-40 w-full sm:top-0 sm:h-screen sm:flex-1;
+  }
 }
