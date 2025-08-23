@@ -36,3 +36,10 @@ export function requireQstashToken() {
     throw new Error('QSTASH_TOKEN is missing (check .env.local)');
   return qstashToken;
 }
+
+export function requireResendToken() {
+  const qstashToken = process.env.RESEND_TOKEN!;
+  if (!qstashToken)
+    throw new Error('RESEND_TOKEN is missing (check .env.local)');
+  return qstashToken;
+}
