@@ -28,7 +28,7 @@ export const sendEmail = async ({
       provider: resend({ token: requireResendToken() }),
     },
     body: {
-      from: 'Kanat <hello.kanatosmon.com>',
+      from: 'Kanat <dev@kanatosmon.com>',
       to: [email],
       subject,
       html: message,
