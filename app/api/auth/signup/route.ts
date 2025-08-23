@@ -5,6 +5,8 @@ import { getDb } from '@/database/drizzle';
 import { users } from '@/database/schema';
 import { eq } from 'drizzle-orm';
 import { hash } from 'bcryptjs';
+import { workflowClient } from '@/lib/workflow';
+import { clientEnv } from '@/lib/config.client';
 
 export async function POST(req: Request) {
   const { fullName, email, password, universityId, universityCard } =
@@ -39,6 +41,11 @@ export async function POST(req: Request) {
     password: hashedPassword,
     universityId,
     universityCard,
+  });
+
+  await workflowClient.trigger({
+    url: `${clientEnv.prodApiEndpoint}/api/workflows/onboarding`,
+    body: { email, fullName },
   });
 
   return NextResponse.json({ success: true });
