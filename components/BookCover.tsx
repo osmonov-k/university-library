@@ -1,7 +1,10 @@
+'use client';
+
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
 import React from 'react';
 import BookCoverSvg from './BookCoverSvg';
+import { IKImage } from 'imagekitio-next';
+import { clientEnv } from '@/lib/config.client';
 
 type BookCoverVariant = 'extraSmall' | 'small' | 'medium' | 'regular' | 'wide';
 
@@ -39,13 +42,16 @@ const BookCover = ({
         className="absolute z-10"
         style={{ left: '12%', width: '87.5%', height: '88%' }}
       >
-        <Image
-          src={coverUrl}
+        <IKImage
+          path={coverUrl}
+          urlEndpoint={clientEnv.imagekit.urlEndpoint}
           alt="Book cover"
           fill
           className="rounded-sm object-fill"
           style={{ objectFit: 'cover' }}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          loading="lazy"
+          lqip={{ active: true }}
         />
       </div>
     </div>
